@@ -90,6 +90,23 @@ export const Button = styled.div`
 		color: #fff;
 		background: #ec6149;
 	}
+	.iconfont {
+		margin-right: 5px;
+	}
 `
 
+export const SearchWrapper = styled.div`
+	float:left;
+	position: relative;
+	.iconfont {
+		position: absolute;
+		right: 5px;
+		bottom: 5px;
+		width: 30px;
+		line-height: 30px;
+		border-radius: 15px;
+		text-align: center;
+	}
+`
+// 这里先把iconfont写成小圆圈是为了后面滑动动画作准备
 
