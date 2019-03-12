@@ -1,5 +1,7 @@
 // 通用组件放于common文件夹中
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group';
+// 内容回顾：react css动画效果
 import {
 	HeaderWrapper,
 	Logo,
@@ -12,6 +14,14 @@ import {
 } from './style'
 
 class Header extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			focused: false
+		}
+		this.handleInputFocus = this.handleInputFocus.bind(this);
+		this.handleInputBlur = this.handleInputBlur.bind(this)
+	}
 	render() {
 		return (
 			<HeaderWrapper>
@@ -24,8 +34,18 @@ class Header extends Component {
 						<i className="iconfont">&#xe636;</i>
 					</NavItem>
 					<SearchWrapper>
-						<NavSearch></NavSearch>
-						<i className="iconfont">&#xe60b;</i>
+						<CSSTransition
+							in={this.state.focused}
+							timeout={300}
+							classNames="slide"
+						>
+							<NavSearch
+							 className={this.state.focused ? 'focused' : ''}
+							 onFocus={this.handleInputFocus}
+							 onBlur={this.handleInputBlur}
+							></NavSearch>
+						</CSSTransition>
+						<i className={this.state.focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
 					</SearchWrapper>
 				</Nav>
 				<Addition>
@@ -37,6 +57,16 @@ class Header extends Component {
 				</Addition>
 			</HeaderWrapper>
 		)
+	}
+	handleInputFocus(){
+		this.setState({
+			focused: true
+		})
+	}
+	handleInputBlur(){
+		this.setState({
+			focused: false
+		})
 	}
 }
 

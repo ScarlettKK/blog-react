@@ -53,7 +53,7 @@ export const NavSearch = styled.input.attrs({
 	placeholder: '搜索'
 })`
 	width: 160px;
-	padding: 0 20px;
+	padding: 0 30px 0 20px;
 	height: 38px;
 	border: none;
 	margin-left: 20px;
@@ -63,8 +63,12 @@ export const NavSearch = styled.input.attrs({
 	border-radius: 19px;
 	background: #eee;
 	font-size: 14px;
+	color: #666;
 	&:: placeholder {
 		color: #999;
+	}
+	&.focused {
+		width: 240px;
 	}
 `
 export const Addition = styled.div`
@@ -98,6 +102,18 @@ export const Button = styled.div`
 export const SearchWrapper = styled.div`
 	float:left;
 	position: relative;
+	.slide-enter {
+		transition: all 0.3s ease-out;
+	}
+	.slide-enter-active {
+		width: 240px;
+	}
+	.slide-exit {
+		transition: all 0.3s ease-out;
+	}
+	.slide-exit-active {
+		width: 160px;
+	}
 	.iconfont {
 		position: absolute;
 		right: 5px;
@@ -106,6 +122,10 @@ export const SearchWrapper = styled.div`
 		line-height: 30px;
 		border-radius: 15px;
 		text-align: center;
+		&.focused {
+			background: #777;
+			color: #fff;
+		}
 	}
 `
 // 这里先把iconfont写成小圆圈是为了后面滑动动画作准备
