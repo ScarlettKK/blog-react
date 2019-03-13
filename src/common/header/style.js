@@ -49,6 +49,7 @@ export const NavItem = styled.div`
 
 // box-sizing: border-box;避免元素width被左右padding撑开
 // 这里演示了如何对组件下的子元素属性进行更改
+// class名之前加&表示同级，不加为父子关系
 export const NavSearch = styled.input.attrs({
 	placeholder: '搜索'
 })`
@@ -69,6 +70,18 @@ export const NavSearch = styled.input.attrs({
 	}
 	&.focused {
 		width: 240px;
+	}
+	&.slide-enter {
+		transition: all 0.3s ease-out;
+	}
+	&.slide-enter-active {
+		width: 240px;
+	}
+	&.slide-exit {
+		transition: all 0.3s ease-out;
+	}
+	&.slide-exit-active {
+		width: 160px;
 	}
 `
 export const Addition = styled.div`
@@ -102,18 +115,6 @@ export const Button = styled.div`
 export const SearchWrapper = styled.div`
 	float:left;
 	position: relative;
-	.slide-enter {
-		transition: all 0.3s ease-out;
-	}
-	.slide-enter-active {
-		width: 240px;
-	}
-	.slide-exit {
-		transition: all 0.3s ease-out;
-	}
-	.slide-exit-active {
-		width: 160px;
-	}
 	.iconfont {
 		position: absolute;
 		right: 5px;
