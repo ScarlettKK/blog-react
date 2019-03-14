@@ -52,7 +52,8 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		focused:state.focused
+		focused:state.header.focused
+		// Reducer整合后，数据包装会多一层
 	}
 }
 
