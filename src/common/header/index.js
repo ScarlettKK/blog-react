@@ -63,6 +63,7 @@ const mapStateToProps = (state) => {
 		// focused:state.get("header").get("focused")
 		// 另一种写法：连续使用get获取的时候，可以使用getIn函数，传入一个数组，意义与上面写法同
 		focused:state.getIn(["header", "focused"])
+		// 最后附上 immutable-js 官方文档 https://immutable-js.github.io/immutable-js/docs/#/
 	}
 }
 
