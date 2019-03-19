@@ -54,9 +54,15 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		focused:state.header.get("focused")
 		// Reducer整合后，数据包装会多一层
 		// 当使用immutable.js封装state之后，state的属性不能通过"."直接获取，而是要用get方法获取
+		// focused:state.header.get("focused")
+		// 这里虽然我们使用了immutable.js，但是这个写法一半普通对象一半immutable对象的，并不规范且有些奇怪，所以我们需要把state也改成一个immutable对象（详情看最大的reducer）
+		
+		// 把state也改成一个immutable对象
+		// focused:state.get("header").get("focused")
+		// 另一种写法：连续使用get获取的时候，可以使用getIn函数，传入一个数组，意义与上面写法同
+		focused:state.getIn(["header", "focused"])
 	}
 }
 
