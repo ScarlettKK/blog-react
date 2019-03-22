@@ -4,7 +4,9 @@ import { fromJS } from 'immutable'
 // 使用immutable.js，我们将创建一个不可被更改的immutable对象
 
 const defaultState = fromJS({
-	focused: false
+	focused: false,
+	list: []
+	//此处存在问题，当创建不可更改的对象的时候，对象里面的属性值如果是一个数组（对象），那么这个数组（对象）也是不可更改的
 })
 
 export default (state = defaultState, action) => {
@@ -16,6 +18,10 @@ export default (state = defaultState, action) => {
 	}
 	if(action.type === actionTypes.SEARCH_BLUR) {
 		return state.set("focused", false)
+	}
+	if(action.type === actionTypes.CHANGE_LIST) {
+		return state.set("list", action.data)
+		// 所以这里不能用普通的数组给list赋值，若list是一个不可更改的数组（参考上面第九行注释）
 	}
 	return state;
 }

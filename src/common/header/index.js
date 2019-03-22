@@ -1,5 +1,5 @@
 // 通用组件放于common文件夹中
-import React from 'react';
+import React,{Component} from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 // 内容回顾：react css动画效果
@@ -21,63 +21,65 @@ import {
 	SearchWrapper
 } from './style'
 
-const getListArea = (show) => {
-	if(show){
-		return (
-			<SearchInfo>
-				<SearchInfoTitle>
-					热门搜索
-					<SearchInfoSwitch>换一批</SearchInfoSwitch>
-				</SearchInfoTitle>
-				<SearchInfoList>
-					<SearchInfoItem>教育</SearchInfoItem>
-					<SearchInfoItem>简书</SearchInfoItem>
-					<SearchInfoItem>生活</SearchInfoItem>
-					<SearchInfoItem>投稿</SearchInfoItem>
-					<SearchInfoItem>教育</SearchInfoItem>
-				</SearchInfoList>
-			</SearchInfo>
-		)
-	} else {
-		return null;
+// 由于Header要被继续扩展，会变得很庞大，继续用无状态组件需要传递更多的参数，并且函数嵌套函数，维护起来会有问题，所以这里改回正常的组件
+class Header extends Component {
+	getListArea(){//根据第24行，这里就不用传参数了
+		if(this.props.focused){
+			return (
+				<SearchInfo>
+					<SearchInfoTitle>
+						热门搜索
+						<SearchInfoSwitch>换一批</SearchInfoSwitch>
+					</SearchInfoTitle>
+					<SearchInfoList>
+					{	
+						this.props.list.map((item) => {
+							return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+						})						
+					}
+					</SearchInfoList>
+				</SearchInfo>
+			)
+		} else {
+			return null;
+		}
 	}
-}
-
-// 改为无状态组件
-const Header = (props) => {
-	return (<HeaderWrapper>
-		<Logo />
-		<Nav>
-			<NavItem className='left active'>首页</NavItem>
-			<NavItem className='left'>下载APP</NavItem>
-			<NavItem className='right'>登录</NavItem>
-			<NavItem className='right'>
-				<i className="iconfont">&#xe636;</i>
-			</NavItem>
-			<SearchWrapper>
-				<CSSTransition
-					in={props.focused}
-					timeout={300}
-					classNames="slide"
-				>
-					<NavSearch
-					 className={props.focused ? 'focused' : ''}
-					 onFocus={props.handleInputFocus}
-					 onBlur={props.handleInputBlur}
-					></NavSearch>
-				</CSSTransition>
-				<i className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
-				{getListArea(props.focused)}
-			</SearchWrapper>
-		</Nav>
-		<Addition>
-		    <Button className="writing">
-			    <i className="iconfont">&#xe624;</i>
-			    写文章
-		    </Button>
-			<Button className="reg">注册</Button>
-		</Addition>
-	</HeaderWrapper>)
+	render() {
+		return (<HeaderWrapper>
+			<Logo />
+			<Nav>
+				<NavItem className='left active'>首页</NavItem>
+				<NavItem className='left'>下载APP</NavItem>
+				<NavItem className='right'>登录</NavItem>
+				<NavItem className='right'>
+					<i className="iconfont">&#xe636;</i>
+				</NavItem>
+				<SearchWrapper>
+					<CSSTransition
+						in={this.props.focused}
+						timeout={300}
+						classNames="slide"
+					>
+						<NavSearch
+						 className={this.props.focused ? 'focused' : ''}
+						 onFocus={this.props.handleInputFocus}
+						 onBlur={this.props.handleInputBlur}
+						></NavSearch>
+					</CSSTransition>
+					<i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
+					{this.getListArea()}
+					{/*这里是根据if返回JSX的一种新写法*/}
+				</SearchWrapper>
+			</Nav>
+			<Addition>
+			    <Button className="writing">
+				    <i className="iconfont">&#xe624;</i>
+				    写文章
+			    </Button>
+				<Button className="reg">注册</Button>
+			</Addition>
+		</HeaderWrapper>)
+	}
 }
 
 const mapStateToProps = (state) => {
@@ -90,14 +92,16 @@ const mapStateToProps = (state) => {
 		// 把state也改成一个immutable对象
 		// focused:state.get("header").get("focused")
 		// 另一种写法：连续使用get获取的时候，可以使用getIn函数，传入一个数组，意义与上面写法同
-		focused:state.getIn(["header", "focused"])
+		focused:state.getIn(["header", "focused"]),
 		// 最后附上 immutable-js 官方文档 https://immutable-js.github.io/immutable-js/docs/#/
+		list: state.getIn(["header", "list"])
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		handleInputFocus(){
+			dispatch(actionCreators.getList())
 			dispatch(actionCreators.searchFocus())
 		},
 		handleInputBlur(){
