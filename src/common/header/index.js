@@ -24,7 +24,12 @@ import {
 // 由于Header要被继续扩展，会变得很庞大，继续用无状态组件需要传递更多的参数，并且函数嵌套函数，维护起来会有问题，所以这里改回正常的组件
 class Header extends Component {
 	getListArea(){//根据第24行，这里就不用传参数了
-		if(this.props.focused){
+		/*
+		 * 代码优化：将this.props的值存储在临时变量中
+		 * 避免变量名过长（每次都是this.props.xxx）
+		*/
+		const { focused, list } = this.props;
+		if(focused){
 			return (
 				<SearchInfo>
 					<SearchInfoTitle>
@@ -33,7 +38,7 @@ class Header extends Component {
 					</SearchInfoTitle>
 					<SearchInfoList>
 					{	
-						this.props.list.map((item) => {
+						list.map((item) => {
 							return <SearchInfoItem key={item}>{item}</SearchInfoItem>
 						})						
 					}
@@ -45,6 +50,11 @@ class Header extends Component {
 		}
 	}
 	render() {
+		/*
+		 * 代码优化：将this.props的值存储在临时变量中
+		 * 避免变量名过长（每次都是this.props.xxx）
+		*/
+		const { focused, handleInputFocus, handleInputBlur } = this.props;
 		return (<HeaderWrapper>
 			<Logo />
 			<Nav>
@@ -56,17 +66,17 @@ class Header extends Component {
 				</NavItem>
 				<SearchWrapper>
 					<CSSTransition
-						in={this.props.focused}
+						in={focused}
 						timeout={300}
 						classNames="slide"
 					>
 						<NavSearch
-						 className={this.props.focused ? 'focused' : ''}
-						 onFocus={this.props.handleInputFocus}
-						 onBlur={this.props.handleInputBlur}
+						 className={focused ? 'focused' : ''}
+						 onFocus={handleInputFocus}
+						 onBlur={handleInputBlur}
 						></NavSearch>
 					</CSSTransition>
-					<i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
+					<i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
 					{this.getListArea()}
 					{/*这里是根据if返回JSX的一种新写法*/}
 				</SearchWrapper>
