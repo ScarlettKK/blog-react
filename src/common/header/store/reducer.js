@@ -5,8 +5,11 @@ import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
 	focused: false,
-	list: []
+	mouseIn: false,
+	list: [],
 	//此处存在问题，当创建不可更改的对象的时候，对象里面的属性值如果是一个数组（对象），那么这个数组（对象）也是不可更改的
+	page: 0,
+	totalPage: 1
 })
 
 export default (state = defaultState, action) => {
@@ -20,8 +23,16 @@ export default (state = defaultState, action) => {
 		case actionTypes.SEARCH_BLUR:
 			return state.set("focused", false)
 		case actionTypes.CHANGE_LIST:
-			return state.set("list", action.data)
-			// 所以这里不能用普通的数组给list赋值，若list是一个不可更改的数组（参考上面第九行注释）
+			return state.merge({
+				list: action.data,// 所以这里不能用普通的数组给list赋值，若list是一个不可更改的数组（参考上面第九行注释）
+				totalPage: action.totalPage
+			})
+		case actionTypes.MOUSE_ENTER:
+			return state.set("mouseIn", true)
+		case actionTypes.MOUSE_LEAVE:
+			return state.set("mouseIn", false)
+		case actionTypes.CHANGE_PAGE:
+			return state.set("page", action.page)
 		default:
 			return state;
 		// immutable对象的set方法，会结合之前immutable对象的值

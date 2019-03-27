@@ -133,7 +133,7 @@ export const SearchWrapper = styled.div`
 
 export const SearchInfo = styled.div`
 	position: absolute;
-	right: 0;
+	left: 0;
 	top: 56px;
 	width: 240px;
 	padding: 0 20px;

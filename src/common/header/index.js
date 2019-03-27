@@ -28,20 +28,30 @@ class Header extends Component {
 		 * 代码优化：将this.props的值存储在临时变量中
 		 * 避免变量名过长（每次都是this.props.xxx）
 		*/
-		const { focused, list } = this.props;
-		if(focused){
+		const { focused, list, page, mouseIn, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props;
+		const newList = list.toJS(); // 将list一个immutable的数组改成一个普通的数组
+		const pageList = [];
+
+		if(newList.length) {//要注意这段代码一开始没有数据的时候也会被加载，所以这里要加上判断，不然下面的key值都是undefined，也会报错
+			for(let i = page * 10 ; i < (page + 1) * 10; i++) {
+				if(newList[i])
+					pageList.push(
+						<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+					)
+			}
+		}
+		if(focused || mouseIn){
 			return (
-				<SearchInfo>
+				<SearchInfo 
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
+				>
 					<SearchInfoTitle>
 						热门搜索
-						<SearchInfoSwitch>换一批</SearchInfoSwitch>
+						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>换一批</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
-					{	
-						list.map((item) => {
-							return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-						})						
-					}
+					{pageList}
 					</SearchInfoList>
 				</SearchInfo>
 			)
@@ -104,7 +114,10 @@ const mapStateToProps = (state) => {
 		// 另一种写法：连续使用get获取的时候，可以使用getIn函数，传入一个数组，意义与上面写法同
 		focused:state.getIn(["header", "focused"]),
 		// 最后附上 immutable-js 官方文档 https://immutable-js.github.io/immutable-js/docs/#/
-		list: state.getIn(["header", "list"])
+		list: state.getIn(["header", "list"]),
+		page: state.getIn(["header", "page"]),
+		mouseIn: state.getIn(["header", "mouseIn"]),
+		totalPage : state.getIn(["header", "totalPage"])
 	}
 }
 
@@ -116,6 +129,19 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleInputBlur(){
 			dispatch(actionCreators.searchBlur())
+		},
+		handleMouseEnter(){
+			dispatch(actionCreators.mouseEnter())
+		},
+		handleMouseLeave(){
+			dispatch(actionCreators.mouseLeave())
+		},
+		handleChangePage(page, totalPage){
+			if(page < totalPage - 1)
+				page ++;
+			else
+				page = 0;
+			dispatch(actionCreators.changePage(page))
 		}
 	}
 }
