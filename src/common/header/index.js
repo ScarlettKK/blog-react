@@ -48,7 +48,11 @@ class Header extends Component {
 				>
 					<SearchInfoTitle>
 						热门搜索
-						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>换一批</SearchInfoSwitch>
+						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+						{/* 下面这里是实现CSS动画的另一种方案，仅借助CSS自带的transition实现；另外这里也用到了ref */}
+						<i ref={(icon) => {this.spinIcon = icon}}className="iconfont spin">&#xe851;</i>
+						换一换
+						</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
 					{pageList}
@@ -86,7 +90,7 @@ class Header extends Component {
 						 onBlur={handleInputBlur}
 						></NavSearch>
 					</CSSTransition>
-					<i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
+					<i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe60b;</i>
 					{this.getListArea()}
 					{/*这里是根据if返回JSX的一种新写法*/}
 				</SearchWrapper>
@@ -136,7 +140,20 @@ const mapDispatchToProps = (dispatch) => {
 		handleMouseLeave(){
 			dispatch(actionCreators.mouseLeave())
 		},
-		handleChangePage(page, totalPage){
+		handleChangePage(page, totalPage, spin){
+			// 实现CSS动画的另一种方案
+			// 下面这里的意思是，spin.style.transform的值中非数字的部分，都替换成空字符串
+			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+			// 将字符串转成数字，并且处理空字符串
+			if(originAngle) {
+				originAngle = parseInt(originAngle, 10)
+			} else {
+				originAngle = 0
+			}
+			// 不断的旋转效果（改变rotate的角度）
+			spin.style.transform = 'rotate('+(originAngle + 360)+'deg)'
+
+			// 页面换一换切换效果
 			if(page < totalPage - 1)
 				page ++;
 			else
