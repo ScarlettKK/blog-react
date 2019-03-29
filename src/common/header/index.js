@@ -68,7 +68,7 @@ class Header extends Component {
 		 * 代码优化：将this.props的值存储在临时变量中
 		 * 避免变量名过长（每次都是this.props.xxx）
 		*/
-		const { focused, handleInputFocus, handleInputBlur } = this.props;
+		const { focused, handleInputFocus, handleInputBlur, list } = this.props;
 		return (<HeaderWrapper>
 			<Logo />
 			<Nav>
@@ -86,7 +86,7 @@ class Header extends Component {
 					>
 						<NavSearch
 						 className={focused ? 'focused' : ''}
-						 onFocus={handleInputFocus}
+						 onFocus={() => handleInputFocus(list)}
 						 onBlur={handleInputBlur}
 						></NavSearch>
 					</CSSTransition>
@@ -127,8 +127,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleInputFocus(){
-			dispatch(actionCreators.getList())
+		handleInputFocus(list){
+			// 代码优化：只有当list值为空的时候，才发送AJAX请求
+			// 避免了无意义的AJAX请求发送
+			if(list.size === 0)
+				dispatch(actionCreators.getList())
 			dispatch(actionCreators.searchFocus())
 		},
 		handleInputBlur(){
