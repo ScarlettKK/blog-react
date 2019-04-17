@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
 import { TopicWrapper, TopicItem } from '../style'
+import { connect } from 'react-redux'
 
 class Topic extends Component {
 	render() {
 		return (
 			<TopicWrapper>
-				<TopicItem>
-					<img 
-						className='topic-pic'
-						src='https://pic1.zhimg.com/90/v2-d74ff761bce030533ceccaa8fd8f9e21_250x0.jpg'
-					/>
-					社会热点
-				</TopicItem>
+				{
+					this.props.list.map((item)=>{
+						return (
+							<TopicItem key={item.get('id')}>
+								<img 
+									className='topic-pic'
+									src={item.get('imgurl')}
+								/>
+								{item.get('title')}
+							</TopicItem>
+						)
+					})
+				}
 			</TopicWrapper>
 		)
 	}
 }
 
-export default Topic
+const mapStateToProps = (state) => ({
+	list: state.get('home').get('topicList')
+})
+
+export default connect(mapStateToProps, null)(Topic)
+// 这里的组件不会改store里面的数据，所以第二个参数传递null
