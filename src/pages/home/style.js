@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const HomeWrapper = styled.div`
 	width: 960px;
 	margin: 0 auto;
-	height: 400px;
 	overflow: hidden;
 `
 
@@ -27,6 +26,7 @@ export const TopicWrapper = styled.div`
 	overflow: hidden
 	padding: 20px 0 10px 0;
 	margin-left:-18px;
+	border-bottom: 1px solid #dcdcdc;
 `
 // 这里先用 margin-left:-18px; 将整体外层div往左拉18px
 // 然后再在下面的子元素中应用margin-left: 18px;，这样最左边的元素就不用单独调整位置
@@ -58,5 +58,32 @@ export const TopicItem = styled.div`
 // 所以这时候图片高，文字低，不能水平居中对齐（字体line-height无效）
 // 其实这时只给img设置vertical-align: middle，不改变其display属性，也能达到相同的效果
 
+export const ListItem = styled.div`
+	padding: 20px 0;
+	border-bottom: 1px solid #dcdcdc;
+	overflow:hidden;
+	.pic {
+		width: 120px;
+		height: 100px;
+		display: block;
+		float: right;
+	}
+`
 
+export const ListInfo = styled.div`
+	width: 500px;
+	float: left;
+	.title {
+		line-height: 27px;
+		font-size: 18px;
+		font-weight: bold;
+		color: #333;
+	}
+	.desc {
+		font-size: 13px;
+		line-height: 24px;
+		color: #999;
+	}
+	
+`
 
