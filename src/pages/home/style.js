@@ -18,7 +18,7 @@ export const HomeLeft = styled.div`
 `
 
 export const HomeRight = styled.div`
-	width: 240px;
+	width: 280px;
 	float: right;
 `
 
@@ -85,5 +85,18 @@ export const ListInfo = styled.div`
 		color: #999;
 	}
 	
+`
+
+export const RecommendWrapper = styled.div`
+	margin: 30px 0;
+	width: 280px;
+	
+`
+// sytle.js中可以接收组件的props传过来的参数,从而达到根据传进来的url地址自由切换背景图片的效果
+export const RecommendItem = styled.div`
+	width: 280px;
+	height: 50px;
+	background: url(${(props) => props.imgUrl});
+	background-size: contain;
 `
 
