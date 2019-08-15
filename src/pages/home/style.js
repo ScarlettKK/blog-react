@@ -100,3 +100,24 @@ export const RecommendItem = styled.div`
 	background-size: contain;
 `
 
+export const WriterWrapper = styled.div`
+	
+`
+
+export const WriterHeader = styled.div`
+	font-size: 14px;
+    color: #969696;
+`
+
+export const WriterList = styled.div`
+	
+`
+
+export const WriterIntro = styled.div`
+	
+`
+
+export const Follow = styled.div`
+	
+`
+
