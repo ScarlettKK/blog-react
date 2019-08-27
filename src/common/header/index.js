@@ -50,7 +50,7 @@ class Header extends Component {
 						热门搜索
 						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
 						{/* 下面这里是实现CSS动画的另一种方案，仅借助CSS自带的transition实现；另外这里也用到了ref */}
-						<i ref={(icon) => {this.spinIcon = icon}}className="iconfont spin">&#xe851;</i>
+						<i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
 						换一换
 						</SearchInfoSwitch>
 					</SearchInfoTitle>

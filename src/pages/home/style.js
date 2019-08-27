@@ -110,7 +110,10 @@ export const WriterHeader = styled.div`
 `
 
 export const WriterList = styled.div`
-	
+	img{
+		width: 48px;
+		height: 48px;
+	}
 `
 
 export const WriterIntro = styled.div`
