@@ -113,14 +113,49 @@ export const WriterList = styled.div`
 	img{
 		width: 48px;
 		height: 48px;
+		border: 1px solid #ddd;
+		border-radius: 50%;
+		vertical-align: middle;
 	}
+	margin-top: 15px;
+	line-height: 20px;
 `
 
 export const WriterIntro = styled.div`
-	
+	.writerName {
+		padding-top: 5px;
+	    margin-right: 60px;
+	    font-size: 14px;
+	    display: block;
+	}
+	.writerAchievement {
+		margin-top: 2px;
+	    font-size: 12px;
+	    color: #969696;
+	    display: block;
+	}
+	display: inline-block;
+	margin-left: 10px;
+	height: 48px;
+	vertical-align: middle;
 `
 
 export const Follow = styled.div`
-	
+	float: right;
+    margin-top: 5px;
+    padding: 0;
+    font-size: 13px;
+    color: #42c02e;
 `
 
+export const CheckAllWriters = styled.div`
+    padding: 7px 7px 7px 12px;
+    width: 92%;
+    font-size: 13px;
+    color: #787878;
+    background-color: #f7f7f7;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 15px;
+`

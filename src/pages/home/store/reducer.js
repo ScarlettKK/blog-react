@@ -3,6 +3,7 @@ import recommend1 from '../../../statics/Recommend1.png'
 import recommend2 from '../../../statics/Recommend2.png'
 import recommend3 from '../../../statics/Recommend3.png'
 import recommend4 from '../../../statics/Recommend4.png'
+import writerHeader from '../../../statics/writerHeader.jpeg'
 
 const defaultState = fromJS({
 	topicList: [{
@@ -37,6 +38,27 @@ const defaultState = fromJS({
 	},{
 		id: 4,
 		imgUrl: recommend4
+	}],
+	writerList:[{
+		id: 1,
+		imgUrl: writerHeader,
+		writerName: '简书钻首席小管家',
+		writerAchievement: '写了184.7k字 · 141.7k喜欢'
+	},{
+		id: 2,
+		imgUrl: writerHeader,
+		writerName: '简书钻首席小管家',
+		writerAchievement: '写了184.7k字 · 141.7k喜欢'
+	},{
+		id: 3,
+		imgUrl: writerHeader,
+		writerName: '简书钻首席小管家',
+		writerAchievement: '写了184.7k字 · 141.7k喜欢'
+	},{
+		id: 4,
+		imgUrl: writerHeader,
+		writerName: '简书钻首席小管家',
+		writerAchievement: '写了184.7k字 · 141.7k喜欢'
 	}]
 })
 

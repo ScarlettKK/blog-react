@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { WriterWrapper, WriterHeader, WriterList, WriterIntro, Follow } from '../style'
+import { WriterWrapper, WriterHeader, WriterList, WriterIntro, Follow, CheckAllWriters } from '../style'
 import { SearchInfoSwitch } from '../../../common/header/style'
-import writerHeader from '../../../statics/writerHeader.jpeg'
 
 class Writer extends Component {
 	render() {
@@ -26,14 +25,25 @@ class Writer extends Component {
 						换一批
 					</SearchInfoSwitch>
 				</WriterHeader>
-				<WriterList>
-					<img src={writerHeader} alt='用户头像'/>
-					<WriterIntro>
-						<span className='writerName'>简书钻首席小管家</span>
-						<span className='writerAchievement'>写了184.7k字 · 141.7k喜欢</span>
-					</WriterIntro>
-					<Follow />
-				</WriterList>
+				{
+					this.props.list.map((item) => {
+						return (
+							<WriterList key={item.get('id')}>
+								<img src={item.get('imgUrl')} alt='用户头像'/>
+								<WriterIntro>
+									<span className='writerName'>{item.get('writerName')}</span>
+									<span className='writerAchievement'>{item.get('writerAchievement')}</span>
+								</WriterIntro>
+								<Follow>
+									+关注
+								</Follow>
+							</WriterList>
+						)
+					})
+				}
+				<CheckAllWriters>
+					查看全部 >
+				</CheckAllWriters>
 			</WriterWrapper>
 		)
 	}
@@ -41,7 +51,7 @@ class Writer extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		
+		list: state.getIn(['home', 'writerList'])
 	}
 }
 
