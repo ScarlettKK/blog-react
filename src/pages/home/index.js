@@ -8,6 +8,7 @@ import Topic from './components/Topic'
 import List from './components/List'
 import Recommend from './components/Recommend'
 import Writer from './components/Writer'
+import axios from 'axios'
 
 class Home extends Component {
 	render() {
@@ -24,6 +25,11 @@ class Home extends Component {
 				</HomeRight>
 			</HomeWrapper>
 		)
+	}
+	componentDidMount() {
+		axios.get('/api/home.json').then((res) => {
+			console.log(res)
+		})
 	}
 }
 
