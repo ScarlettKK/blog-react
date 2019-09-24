@@ -4,6 +4,7 @@ import {
 	HomeLeft,
 	HomeRight
 	} from './style'
+import { connect } from 'react-redux'
 import Topic from './components/Topic'
 import List from './components/List'
 import Recommend from './components/Recommend'
@@ -28,9 +29,23 @@ class Home extends Component {
 	}
 	componentDidMount() {
 		axios.get('/api/home.json').then((res) => {
-			console.log(res)
+			const data = res.data.data;
+			const action = {
+				type: 'change_home_data',
+				articleList: data.articleList,
+				recommendList: data.recommendList,
+				topicList: data.topicList,
+				writerList: data.writerList
+			}
+			this.props.changeHomeData(action);
 		})
 	}
 }
 
-export default Home
+const mapDispatch = (dispatch) => ({
+	changeHomeData(action){
+		dispatch(action)
+	}
+})
+
+export default connect(null, mapDispatch)(Home)
